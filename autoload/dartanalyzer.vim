@@ -128,19 +128,14 @@ function! s:update_hl()
 endfunction
 
 function! s:show_msg(msg)
-  let ruler = &ruler
-  let showcmd = &showcmd
-  if strdisplaywidth(a:msg) > g:dartanalyzer_max_msglen
-    let msg = a:msg[: g:dartanalyzer_max_msglen-5] . '...'
+  let _winwidth = min([winwidth(0), g:dartanalyzer_max_msglen]) - 5
+  let msgwidth = strdisplaywidth(a:msg)
+  if msgwidth >= _winwidth
+    let msg = a:msg[: _winwidth] . '...'
   else
     let msg = a:msg
   endif
-  set noruler
-  set noshowcmd
-  redraw
   echo msg
-  let &ruler = ruler
-  let &showcmd = showcmd
 endfunction
 
 function! dartanalyzer#update_message()
