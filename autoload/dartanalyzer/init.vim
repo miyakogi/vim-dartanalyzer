@@ -4,7 +4,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " autoload variables
-let g:dartanalyzer#init#cmd = 'dartanalyzer --batch --machine'
+let g:dartanalyzer#init#cmd = g:dartanalyzer_cmd . ' --batch --machine'
 let g:dartanalyzer#init#endline = '>>> TEST '
 
 " Script local variables

@@ -29,6 +29,9 @@ if !exists('s:initialized')
   endif "}}}
 
   " Set default values {{{
+  if !exists('g:dartanalyzer_cmd')
+    let g:dartanalyzer_cmd = 'dartanalyzer'
+  endif
   if !exists('g:dartanalyzer_id')
     let g:dartanalyzer_id = 'dartanalyzer_precess'
   endif
