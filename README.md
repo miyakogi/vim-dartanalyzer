@@ -3,6 +3,8 @@ vim-dartanalyzer
 
 Vim plugin for running dartanalyzer asynchronously.
 
+![ScreenCast](https://raw.githubusercontent.com/wiki/miyakogi/vim-dartanalyzer/images/screencast1.gif)
+
 Usage
 -----
 
