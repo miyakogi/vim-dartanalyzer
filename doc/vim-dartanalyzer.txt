@@ -1,0 +1,72 @@
+*dartanalyzer.txt* Run dartanalyzer asynchronously.
+
+Author: miyakogi (https://github.com/miyakogi/)
+Repository: https://github.com/miyakogi/vim-dartanalyzer
+
+==============================================================================
+CONTENTS					*dartanalyzer-contents*
+
+  1. Introduction............................... |dartanalyzer-introduction|
+  2. Usage...................................... |dartanalyzer-commands|
+  3. Commands................................... |dartanalyzer-usage|
+  4. Options.................................... |dartanalyzer-options|
+
+==============================================================================
+1. INTRODUCTION					*dartanalyzer-introduction*
+
+==============================================================================
+2. Usage					*dartanalyzer-usage*
+
+This plugin will automatically start dartanalyzer in background (at the first
+time, this process will take a few seconds). Then syntax errors and warnings
+will be highlighted.
+
+Errors and warnings are set in vim's location-list. By using |:lopen| command,
+you can see all positions of errors/warnings, and you can jump to the line.
+
+==============================================================================
+3. Commands						*dartanalyzer-commands*
+
+:DartAnalyzerEnable					*:DartAnalyzerEnable*
+  Enable automatic syntax check.
+
+:DartAnalyzerDisable					*:DartAnalyzerDisable*
+  Disable automatic syntax check.
+
+:DartAnalyzerRun					*:DartAnalyzerRun*
+  Run dartanalyzer and check syntax once.
+
+==============================================================================
+4. Options						*dartanalyzer-options*
+
+					*g:dartanalyzer_disable_autostart*
+If this variable is set to non-zero value, does not start syntax check
+automatically when *.dart file is opened.
+
+  Type: Number
+  Default: 0
+  Example: >
+	let g:dartanalyzer_disable_autostart = 1
+<
+
+							*g:dartanalyzer_cmd*
+Specifies a command to run dartanalyzer.
+
+  Type: String
+  Default: 'dartanalyzer'
+  Example: >
+	let g:dartanalyzer_cmd = '/usr/bin/dartanalyzer'
+<
+
+						*g:dartanalyzer_post_process*
+Specifies a command to run after each syntax check.
+
+  Type: String
+  Default: ''
+  Example: >
+	" Update lightline (a lightweight status-line plugin).
+	let g:dartanalyzer_postprocess = 'call lightline#update()'
+<
+
+==============================================================================
+vim:tw=78:sw=8:ts=8:ft=help:norl:noet:
