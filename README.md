@@ -5,9 +5,7 @@ Vim plugin for running dartanalyzer asynchronously.
 
 ![ScreenCast](https://raw.githubusercontent.com/wiki/miyakogi/vim-dartanalyzer/images/screencast1.gif)
 
-Usage
------
-
+This plugin is tested only on Linux (Ubuntu 14.04 64-bit).
 
 Requirements
 ------------
@@ -15,3 +13,20 @@ Requirements
 - `dartanalyzer` (included in [dart-sdk](https://www.dartlang.org/tools/sdk/))
 - Vim plugins
     - [Shougo/vimproc.vim](https://github.com/Shougo/vimproc.vim)
+
+Usage
+-----
+
+Install this plugin and open `*.dart` file in vim.
+This plugin will automatically start dartanalyzer in background (at the first time, this process will take a few seconds).
+Then syntax errors and wornings will be highlighted.
+
+Errors and wornings are set in vim's location-list.
+By using `:lopen` command, you can see all positions of errors/warnings, and you can jump to the line.
+
+If `filetype` is not set automatically, try [dart-lang/dart-vim-plugin](https://github.com/dart-lang/dart-vim-plugin).
+Otherwise, add the following line in your `.vimrc`.
+
+```vim
+autocmd BufNewFile,BufRead *.dart set filetype=dart
+```
