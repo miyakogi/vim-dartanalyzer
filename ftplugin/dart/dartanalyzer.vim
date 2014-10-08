@@ -13,27 +13,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " ======== Global startup ======== {{{
-if !exists('s:initialized')
-  " Check dartanalyzer and version of vim {{{
-  if !executable('dartanalyzer')
-    echohl ErrorMsg
-    echomsg '[dartanalyzer] `dartanalyzer` is not executable!'
-    echohl
-    finish
-  endif
-  if !exists('*matchadd')
-    echohl ErrorMsg
-    echomsg '[dartanalyzer] This VIM does not support `matchadd`. Please upgrade vim to a newer version.'
-    echohl
-    finish
-  endif "}}}
-
   " Set default values {{{
   if !exists('g:dartanalyzer_cmd')
     let g:dartanalyzer_cmd = 'dartanalyzer'
   endif
   if !exists('g:dartanalyzer_id')
-    let g:dartanalyzer_id = 'dartanalyzer_precess'
+    let g:dartanalyzer_id = 'dartanalyzer_process'
   endif
   if !exists('g:dartanalyzer_max_msglen')
     let g:dartanalyzer_max_msglen = 80
@@ -58,6 +43,21 @@ if !exists('s:initialized')
     let g:dartanalyzer_postprocess = ''
   endif "}}}
 
+if !exists('s:initialized')
+  " Check dartanalyzer and version of vim {{{
+  if !executable(g:dartanalyzer_cmd)
+    echohl ErrorMsg
+    echomsg '[dartanalyzer] `dartanalyzer` is not executable!'
+    echohl
+    finish
+  endif
+  if !exists('*matchadd')
+    echohl ErrorMsg
+    echomsg '[dartanalyzer] This VIM does not support `matchadd`. Please upgrade vim to a newer version.'
+    echohl
+    finish
+  endif "}}}
+
   " Vital startup {{{
   let s:V = vital#of('dartanalyzer')
   let g:dartanalyzer_pm = s:V.import('ProcessManager')
@@ -71,10 +71,6 @@ if !exists('s:initialized')
     autocmd! *
   augroup END
   "}}}
-
-  function! g:DartAnalyzerRun() "{{{
-    call dartanalyzer#start_new_analysis()
-  endfunction "}}}
 
   function! s:disable_global() "{{{
     " Delete autocmd in dartanalyzer in all buffers.
@@ -97,7 +93,6 @@ if !exists('s:initialized')
   endfunction "}}}
 
   " Define commands {{{
-  command! DartAnalyzerRun call dartanalyzer#start_new_analysis()
   command! DartAnalyzerEnable call dartanalyzer#init#enable()
   command! DartAnalyzerDisable call s:disable_global()
   "}}}
@@ -115,6 +110,8 @@ let b:dartanalyzer_loclist_pre = []
 let b:dartanalyzer_filepath = expand('%:p')
 let b:dartanalyzer_tempfile = s:make_tempfile()
 "}}}
+
+command! -buffer DartAnalyzerRun call dartanalyzer#start_new_analysis()
 
 if !g:dartanalyzer_disable_autostart
   call dartanalyzer#init#enable()
