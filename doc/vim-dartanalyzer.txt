@@ -21,8 +21,9 @@ This plugin will automatically start dartanalyzer in background (at the first
 time, this process will take a few seconds). Then syntax errors and warnings
 will be highlighted.
 
-Errors and warnings are set in vim's location-list. By using |:lopen| command,
-you can see all positions of errors/warnings, and you can jump to the line.
+Errors and warnings are set in vim's quickfix list. By using |:copen|
+command, you can see all positions of errors/warnings, and you can jump to
+the line.
 
 ==============================================================================
 3. Commands						*dartanalyzer-commands*
@@ -66,6 +67,29 @@ Specifies a command to run after each syntax check.
   Example: >
 	" Update lightline (a lightweight status-line plugin).
 	let g:dartanalyzer_postprocess = 'call lightline#update()'
+<
+
+					*g:dartanalyzer_disable_highlight*
+If this variable is set to non-zero value, errors/warnings are not highlighted
+by this plugin. Instead, |vim-hier| plugin is used if possible.
+(see https://github.com/jceb/vim-hier)
+
+  Type: Number
+  Default: 0
+  Example: >
+	let g:dartanalyzer_disable_highlight = 1
+<
+
+					*g:dartanalyzer_disable_message*
+If this variable is set to non-zero value, this plugin does not show
+error/warning messages on status line. Instead, |quickfixstatus| plugin is
+used if possible.
+(see https://github.com/dannyob/quickfixstatus)
+
+  Type: Number
+  Default: 0
+  Example: >
+	let g:dartanalyzer_disable_message = 1
 <
 
 ==============================================================================
