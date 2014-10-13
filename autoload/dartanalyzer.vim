@@ -76,9 +76,7 @@ function! s:parse(messages)
   call s:update_hl()
   call dartanalyzer#update_message()
 
-  if g:dartanalyzer_postprocess
-    execute g:dartanalyzer_postprocess
-  endif
+  execute g:dartanalyzer_postprocess
 
   call s:parse_postprocess()
 endfunction
