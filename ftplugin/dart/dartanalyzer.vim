@@ -38,6 +38,12 @@ set cpo&vim
   if !exists('g:dartanalyzer_show_startupmsg')
     let g:dartanalyzer_show_startupmsg = 0
   endif
+  if !exists('g:dartanalyzer_disable_highlight')
+    let g:dartanalyzer_disable_highlight = 0
+  endif
+  if !exists('g:dartanalyzer_disable_message')
+    let g:dartanalyzer_disable_message = 0
+  endif
   " This plugin executes this var after running dartanalyzer and parsing results
   if !exists('g:dartanalyzer_postprocess')
     let g:dartanalyzer_postprocess = ''

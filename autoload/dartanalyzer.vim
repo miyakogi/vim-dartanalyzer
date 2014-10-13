@@ -49,7 +49,10 @@ function! s:poll_process()
 endfunction
 
 function! s:parse(messages)
-  call dartanalyzer#clear_hl()
+  if !g:dartanalyzer_disable_highlight
+    call dartanalyzer#clear_hl()
+  endif
+
   let message_lines = split(a:messages, '\n')
   let status = message_lines[-1]
 
@@ -68,13 +71,18 @@ function! s:parse(messages)
   let b:dartanalyzer_loclist = []
   let error_lists = s:split_error_lines(message_lines)
   for error_list in error_lists
-    let qf_item = s:to_qfformat(error_list)
-    let b:dartanalyzer_loclist += [ qf_item ]
+    let error_item = s:to_qfformat(error_list)
+    let b:dartanalyzer_loclist += [ error_item ]
   endfor
 
-  call setloclist(0, b:dartanalyzer_loclist, 'r')
-  call s:update_hl()
-  call dartanalyzer#update_message()
+  call setloclist(0, b:dartanalyzer_loclist)
+  if !g:dartanalyzer_disable_highlight
+    call s:update_hl()
+  endif
+
+  if !g:dartanalyzer_disable_message
+    call dartanalyzer#update_message()
+  endif
 
   execute g:dartanalyzer_postprocess
 
@@ -137,6 +145,10 @@ function! s:show_msg(msg)
 endfunction
 
 function! dartanalyzer#update_message()
+  if g:dartanalyzer_disable_message
+    return
+  endif
+
   let lnum = line('.')
   if has_key(b:dartanalyzer_errorpos_text, lnum)
     call s:show_msg(b:dartanalyzer_errorpos_text[lnum])
