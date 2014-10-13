@@ -78,6 +78,8 @@ function! s:parse(messages)
   call setloclist(0, b:dartanalyzer_loclist)
   if !g:dartanalyzer_disable_highlight
     call s:update_hl()
+  elseif exists('g:loaded_hier')
+    execute "HierUpdate"
   endif
 
   if !g:dartanalyzer_disable_message
