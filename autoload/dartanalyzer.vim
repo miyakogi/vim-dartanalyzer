@@ -82,6 +82,8 @@ function! s:parse(messages)
 
   if !g:dartanalyzer_disable_message
     call dartanalyzer#update_message()
+  elseif exists('g:loaded_quickfixstatus')
+    execute "QuickfixStatusEnable"
   endif
 
   execute g:dartanalyzer_postprocess
