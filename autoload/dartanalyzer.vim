@@ -68,14 +68,14 @@ function! s:parse(messages)
     echoerr 'Unknown end-status: ' . status
   endif
 
-  let b:dartanalyzer_loclist = []
+  let b:dartanalyzer_qflist = []
   let error_lists = s:split_error_lines(message_lines)
   for error_list in error_lists
     let error_item = s:to_qfformat(error_list)
-    let b:dartanalyzer_loclist += [ error_item ]
+    let b:dartanalyzer_qflist += [ error_item ]
   endfor
 
-  call setloclist(0, b:dartanalyzer_loclist)
+  call setqflist(b:dartanalyzer_qflist)
   if !g:dartanalyzer_disable_highlight
     call s:update_hl()
   elseif exists('g:loaded_hier')
@@ -105,8 +105,8 @@ function! s:parse_postprocess()
 endfunction
 
 function! dartanalyzer#clear_hl()
-  if exists('b:dartanalyzer_loclist')
-    for qf_item in b:dartanalyzer_loclist
+  if exists('b:dartanalyzer_qflist')
+    for qf_item in b:dartanalyzer_qflist
       try
         call matchdelete(qf_item.id)
       catch /^Vim\%((\a\+)\)\=:E\(803\|716\)/
@@ -120,8 +120,8 @@ function! s:update_hl()
   highlight link DartAnalyzerWarning SpellCap
   let b:dartanalyzer_errorpos_text = {}
   let b:dartanalyzer_warnpos_text = {}
-  if len(b:dartanalyzer_loclist) > 0
-    for qf_item in b:dartanalyzer_loclist
+  if len(b:dartanalyzer_qflist) > 0
+    for qf_item in b:dartanalyzer_qflist
       let l = qf_item.lnum
       let c = qf_item.col + 1  " dartanalyzer counts the first column as 0
       if qf_item.type == 'W'
@@ -218,7 +218,7 @@ function! dartanalyzer#count_warnings()
 endfunction
 
 function! dartanalyzer#count()
-  return len(b:dartanalyzer_loclist)
+  return len(b:dartanalyzer_qflist)
 endfunction
 
 function! dartanalyzer#status_line()

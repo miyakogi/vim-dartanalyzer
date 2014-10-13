@@ -111,8 +111,7 @@ let b:dartanalyzer_prev_status = ''
 let b:dartanalyzer_errorpos_text = {}
 let b:dartanalyzer_warnpos_text = {}
 let b:dartanalyzer_running = 0
-let b:dartanalyzer_loclist = []
-let b:dartanalyzer_loclist_pre = []
+let b:dartanalyzer_qflist = []
 let b:dartanalyzer_filepath = expand('%:p')
 let b:dartanalyzer_tempfile = s:make_tempfile()
 "}}}
