@@ -80,6 +80,7 @@ if !exists('s:initialized')
 
   function! s:disable_global() "{{{
     " Delete autocmd in dartanalyzer in all buffers.
+    call dartanalyzer#clear_hl()
     augroup dartanalyzer
       autocmd! *
     augroup END
