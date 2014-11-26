@@ -99,13 +99,28 @@ if !exists('s:initialized')
     return tempfile
   endfunction "}}}
 
+  " Find package root directory
+  function! s:get_package_root() "{{{
+    let modifier  = '%:p:h'
+    let b:dartanalyzer_pkgdir = ''
+    for x in range(4)
+      let l:cur_dir = expand(modifier)
+      let l:pkgdir = l:cur_dir . '/packages'
+      if isdirectory(l:pkgdir)
+        return l:pkgdir
+      endif
+      let modifier .= ':h'
+    endfor
+    return ""
+  endfunction "}}}
+
   " Define commands {{{
   command! DartAnalyzerEnable call dartanalyzer#init#enable()
   command! DartAnalyzerDisable call s:disable_global()
   "}}}
 
   let s:initialized = 1
-endif"}}}
+endif "}}}
 
 " ======== Initialize buffer ========"{{{
 let b:dartanalyzer_prev_status = ''
@@ -115,6 +130,7 @@ let b:dartanalyzer_running = 0
 let b:dartanalyzer_qflist = []
 let b:dartanalyzer_filepath = expand('%:p')
 let b:dartanalyzer_tempfile = s:make_tempfile()
+let b:dartanalyzer_pkgdir = s:get_package_root()
 "}}}
 
 command! -buffer DartAnalyzerRun call dartanalyzer#start_new_analysis()

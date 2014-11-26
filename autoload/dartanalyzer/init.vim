@@ -5,6 +5,9 @@ set cpo&vim
 
 " autoload variables
 let g:dartanalyzer#init#cmd = g:dartanalyzer_cmd . ' --batch --format=machine'
+if exists('b:dartanalyzer_pkgdir') && b:dartanalyzer_pkgdir !=# ''
+  let g:dartanalyzer#init#cmd .= ' --package-root ' . b:dartanalyzer_pkgdir
+endif
 let g:dartanalyzer#init#endline = '>>> TEST '
 
 " Script local variables
