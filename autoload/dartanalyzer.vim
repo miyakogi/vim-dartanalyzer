@@ -138,7 +138,7 @@ function! s:update_hl()
 endfunction
 
 function! s:show_msg(msg)
-  let _winwidth = min([winwidth(0), g:dartanalyzer_max_msglen]) - 5
+  let _winwidth = min([&columns, g:dartanalyzer_max_msglen]) - 5
   let msgwidth = strdisplaywidth(a:msg)
   if msgwidth >= _winwidth
     let msg = a:msg[: _winwidth] . '...'
