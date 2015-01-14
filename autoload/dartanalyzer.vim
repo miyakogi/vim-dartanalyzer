@@ -3,6 +3,19 @@ scriptencoding utf-8
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! dartanalyzer#run_analysis(...) abort
+  if len(a:000) > 0
+    let file_path = a:1
+  else
+    let file_path = expand('%:p')
+  endif
+
+  if !filereadable(l:file_path)
+    echoerr "Can't read tempfile: " . l:file_path
+  endif
+  call g:dartanalyzer_pm.writeln(g:dartanalyzer_id, l:file_path)
+endfunction
+
 function! dartanalyzer#start_new_analysis()
   if exists('b:dartanalyzer_running') && b:dartanalyzer_running == 1
     call s:poll_process()
@@ -10,15 +23,11 @@ function! dartanalyzer#start_new_analysis()
   endif
 
   call g:dartanalyzer_pm.touch(g:dartanalyzer_id, g:dartanalyzer#init#cmd)
-
   let b:dartanalyzer_message = ''
   if b:dartanalyzer_tempfile != b:dartanalyzer_filepath
     call writefile(getline(1,'$'), b:dartanalyzer_tempfile)
   endif
-  if !filereadable(b:dartanalyzer_tempfile)
-    echoerr "Can't read tempfile: " . b:dartanalyzer_tempfile
-  endif
-  call g:dartanalyzer_pm.writeln(g:dartanalyzer_id, b:dartanalyzer_tempfile)
+  call g:dartanalyzer#run_analysis(b:dartanalyzer_tempfile)
 
   let b:dartanalyzer_running = 1
   let s:start_time = localtime()
