@@ -125,6 +125,9 @@ function! s:update_hl()
   let b:dartanalyzer_warnpos_text = {}
   if len(b:dartanalyzer_qflist) > 0
     for qf_item in b:dartanalyzer_qflist
+      if qf_item.filename !=# b:dartanalyzer_filepath
+        continue
+      endif
       let l = qf_item.lnum
       let c = qf_item.col + 1  " dartanalyzer counts the first column as 0
       if qf_item.type == 'W'
@@ -181,7 +184,7 @@ endfunction
 function! s:to_qfformat(error_list)
   let l:qf_item = {}
   let l:qf_item.bufnr = bufnr('%')
-  let l:qf_item.filename = b:dartanalyzer_filepath
+  let l:qf_item.filename = a:error_list[3]
 
   let message = a:error_list[7]
   let l:qf_item.text = message
