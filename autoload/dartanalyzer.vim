@@ -27,7 +27,7 @@ function! dartanalyzer#start_new_analysis()
   if b:dartanalyzer_tempfile != b:dartanalyzer_filepath
     call writefile(getline(1,'$'), b:dartanalyzer_tempfile)
   endif
-  call g:dartanalyzer#run_analysis(b:dartanalyzer_tempfile)
+  call g:dartanalyzer#run_analysis(b:dartanalyzer_filepath)
 
   let b:dartanalyzer_running = 1
   let s:start_time = localtime()

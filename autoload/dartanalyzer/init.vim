@@ -37,7 +37,7 @@ function! s:vm_startup()
 
   call writefile(getline(1,'$'), b:dartanalyzer_tempfile)
 
-  call dartanalyzer#run_analysis(b:dartanalyzer_tempfile)
+  call dartanalyzer#run_analysis(b:dartanalyzer_filepath)
   call g:dartanalyzer_pm.read(g:dartanalyzer_id, [g:dartanalyzer#init#endline])
 
   augroup dartanalyzer_polling
