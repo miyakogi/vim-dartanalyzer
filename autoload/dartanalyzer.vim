@@ -24,9 +24,6 @@ function! dartanalyzer#start_new_analysis()
 
   call g:dartanalyzer_pm.touch(g:dartanalyzer_id, g:dartanalyzer#init#cmd)
   let b:dartanalyzer_message = ''
-  if b:dartanalyzer_tempfile != b:dartanalyzer_filepath
-    call writefile(getline(1,'$'), b:dartanalyzer_tempfile)
-  endif
   call g:dartanalyzer#run_analysis(b:dartanalyzer_filepath)
 
   let b:dartanalyzer_running = 1
@@ -108,9 +105,6 @@ function! s:parse_postprocess()
   augroup dartanalyzer_polling
     autocmd! * <buffer>
   augroup END
-  if b:dartanalyzer_tempfile != b:dartanalyzer_filepath
-    call writefile([''], b:dartanalyzer_tempfile)
-  endif
 endfunction
 
 function! dartanalyzer#clear_hl()

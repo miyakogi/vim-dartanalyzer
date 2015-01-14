@@ -86,19 +86,6 @@ if !exists('s:initialized')
     augroup END
   endfunction "}}}
 
-  " Use tempfile as cache if possible (Only available in *nix)
-  function! s:make_tempfile() "{{{
-    if filewritable('/dev/shm') == 2
-      let tempfile = '/dev/shm/dartanalyzer_' . reltimestr(reltime()) . '.dart'
-    elseif filewritable('/tmp') == 2
-      let tempfile = system('tempfile')
-    else
-      " make tempfile in the same directory (for Windows)
-      let tempfile = b:dartanalyzer_filepath . '.temp'
-    endif
-    return tempfile
-  endfunction "}}}
-
   " Find package root directory
   function! s:get_package_root() "{{{
     let modifier  = '%:p:h'
@@ -129,7 +116,6 @@ let b:dartanalyzer_warnpos_text = {}
 let b:dartanalyzer_running = 0
 let b:dartanalyzer_qflist = []
 let b:dartanalyzer_filepath = expand('%:p')
-let b:dartanalyzer_tempfile = s:make_tempfile()
 let b:dartanalyzer_pkgdir = s:get_package_root()
 "}}}
 
