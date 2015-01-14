@@ -11,7 +11,7 @@ function! dartanalyzer#run_analysis(...) abort
   endif
 
   if !filereadable(l:file_path)
-    echoerr "Can't read tempfile: " . l:file_path
+    echoerr "Can't read file: " . l:file_path
   endif
   call g:dartanalyzer_pm.writeln(g:dartanalyzer_id, l:file_path)
 endfunction
