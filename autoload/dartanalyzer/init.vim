@@ -22,7 +22,6 @@ endfor
 function! s:enable()
   augroup dartanalyzer
     autocmd! * <buffer>
-    autocmd BufLeave,BufWinLeave <buffer> call dartanalyzer#clear_hl()
     autocmd BufEnter,BuFWinEnter <buffer> call dartanalyzer#start_new_analysis()
     autocmd BufWritePost <buffer> call dartanalyzer#start_new_analysis()
     autocmd CursorMoved <buffer> call dartanalyzer#update_message()
