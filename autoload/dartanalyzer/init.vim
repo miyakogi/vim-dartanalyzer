@@ -25,10 +25,7 @@ function! s:enable()
     autocmd BufLeave,BufWinLeave <buffer> call dartanalyzer#clear_hl()
     autocmd BufEnter,BuFWinEnter <buffer> call dartanalyzer#start_new_analysis()
     autocmd BufWritePost <buffer> call dartanalyzer#start_new_analysis()
-    autocmd InsertLeave <buffer> call dartanalyzer#start_new_analysis()
-    autocmd CursorHold,CursorHoldI,FocusLost <buffer> call dartanalyzer#start_new_analysis()
     autocmd CursorMoved <buffer> call dartanalyzer#update_message()
-    autocmd TextChanged <buffer> call dartanalyzer#start_if_possible()
   augroup END
 endfunction
 
