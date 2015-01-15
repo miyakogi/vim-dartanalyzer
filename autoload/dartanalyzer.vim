@@ -192,10 +192,18 @@ function! s:to_qfformat(error_list)
   let type = a:error_list[0]
   if type ==# 'ERROR'
     let l:qf_item.type = 'E'
-    let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
+    if has_key(b:dartanalyzer_errorpos_text, qf_item.lnum)
+      let b:dartanalyzer_errorpos_text[ qf_item.lnum ] .= ', ' . qf_item.text
+    else
+      let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
+    endif
   elseif type ==# 'WARNING' || type ==# 'HINT' || type ==# 'INFO'
     let l:qf_item.type = 'W'
-    let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
+    if has_key(b:dartanalyzer_warnpos_text, qf_item.lnum)
+      let b:dartanalyzer_warnpos_text[ qf_item.lnum ] .= ', ' . qf_item.text
+    else
+      let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
+    endif
   else
     echohl ErrorMsg
     echomsg '[dartanalyzer] Unknown error type: ' . type
