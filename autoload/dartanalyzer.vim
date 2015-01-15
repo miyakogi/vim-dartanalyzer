@@ -132,7 +132,6 @@ function! s:update_hl()
       let c = qf_item.col + 1  " dartanalyzer counts the first column as 0
       if qf_item.type == 'W'
         let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
-        " let qf_item.id = matchadd('DartAnalyzerWarning', '\%' . l . 'l\%' . c . 'c.*$')
         let qf_item.id = matchadd('DartAnalyzerWarning', '^\%' . l . 'l.\{-}\zs\k\+\k\@!\%>' . c . 'c')
       elseif qf_item.type == 'E'
         let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
