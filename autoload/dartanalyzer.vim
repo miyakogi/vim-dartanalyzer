@@ -121,8 +121,6 @@ function! dartanalyzer#clear_hl()
 endfunction
 
 function! s:update_hl()
-  highlight link DartAnalyzerError SpellBad
-  highlight link DartAnalyzerWarning SpellCap
   if len(b:dartanalyzer_qflist) > 0
     for qf_item in b:dartanalyzer_qflist
       if qf_item.filename !=# b:dartanalyzer_filepath

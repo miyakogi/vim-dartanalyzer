@@ -106,6 +106,14 @@ if !exists('s:initialized')
   command! DartAnalyzerDisable call s:disable_global()
   "}}}
 
+  " Set highlight
+  highlight link DartAnalyzerError SpellBad
+  highlight link DartAnalyzerWarning SpellCap
+  augroup dartanalyzer_highlight
+    autocmd ColorScheme *.dart highlight link DartAnalyzerError SpellBad
+    autocmd ColorScheme *.dart highlight link DartAnalyzerWarning SpellCap
+  augroup END
+
   let s:initialized = 1
 endif "}}}
 
