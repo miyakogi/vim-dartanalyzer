@@ -220,12 +220,22 @@ function! dartanalyzer#start_if_possible()
   endif
 endfunction
 
+function! s:count_qfitems(type)
+  let n = 0
+  for qf_item in b:dartanalyzer_qflist
+    if qf_item.type ==# a:type
+      let n += 1
+    endif
+  endfor
+  return n
+endfunction
+
 function! dartanalyzer#count_errors()
-  return len(b:dartanalyzer_errorpos_text)
+  return s:count_qfitems('E')
 endfunction
 
 function! dartanalyzer#count_warnings()
-  return len(b:dartanalyzer_warnpos_text)
+  return s:count_qfitems('W')
 endfunction
 
 function! dartanalyzer#count()
