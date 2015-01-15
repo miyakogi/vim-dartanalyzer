@@ -75,6 +75,8 @@ function! s:parse(messages)
   endif
 
   let b:dartanalyzer_qflist = []
+  let b:dartanalyzer_errorpos_text = {}
+  let b:dartanalyzer_warnpos_text = {}
   let error_lists = s:split_error_lines(message_lines)
   for error_list in error_lists
     let error_item = s:to_qfformat(error_list)
@@ -121,8 +123,6 @@ endfunction
 function! s:update_hl()
   highlight link DartAnalyzerError SpellBad
   highlight link DartAnalyzerWarning SpellCap
-  let b:dartanalyzer_errorpos_text = {}
-  let b:dartanalyzer_warnpos_text = {}
   if len(b:dartanalyzer_qflist) > 0
     for qf_item in b:dartanalyzer_qflist
       if qf_item.filename !=# b:dartanalyzer_filepath
@@ -131,9 +131,10 @@ function! s:update_hl()
       let l = qf_item.lnum
       let c = qf_item.col + 1  " dartanalyzer counts the first column as 0
       if qf_item.type == 'W'
-        let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
+        " let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
         let qf_item.id = matchadd('DartAnalyzerWarning', '^\%' . l . 'l.\{-}\zs\k\+\k\@!\%>' . c . 'c')
       elseif qf_item.type == 'E'
+        " let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
         let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
         let qf_item.id = matchadd('DartAnalyzerError', '\%' . l . 'l' . '.*$')
       endif
@@ -182,26 +183,25 @@ function! s:to_qfformat(error_list)
   let l:qf_item = {}
   let l:qf_item.bufnr = bufnr('%')
   let l:qf_item.filename = a:error_list[3]
+  let l:qf_item.lnum = a:error_list[4]
+  let l:qf_item.col = a:error_list[5]
 
   let message = a:error_list[7]
   let l:qf_item.text = message
 
-  let qf_type = ''
   let type = a:error_list[0]
   if type ==# 'ERROR'
-    let qf_type = 'E'
+    let l:qf_item.type = 'E'
+    let b:dartanalyzer_errorpos_text[ qf_item.lnum ] = qf_item.text
   elseif type ==# 'WARNING' || type ==# 'HINT' || type ==# 'INFO'
-    let qf_type = 'W'
+    let l:qf_item.type = 'W'
+    let b:dartanalyzer_warnpos_text[ qf_item.lnum ] = qf_item.text
   else
     echohl ErrorMsg
     echomsg '[dartanalyzer] Unknown error type: ' . type
     echohl
-    let qf_type = 'E'
+    let l:qf_item.type = 'E'
   endif
-  let l:qf_item.type = qf_type
-
-  let l:qf_item.lnum = a:error_list[4]
-  let l:qf_item.col = a:error_list[5]
 
   return l:qf_item
 endfunction
