@@ -163,8 +163,6 @@ function! dartanalyzer#update_message()
     call s:show_msg(b:dartanalyzer_errorpos_text[lnum])
   elseif has_key(b:dartanalyzer_warnpos_text, lnum)
     call s:show_msg(b:dartanalyzer_warnpos_text[lnum])
-  else
-    call s:show_msg('')
   endif
 endfunction
 
