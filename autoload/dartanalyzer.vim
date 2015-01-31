@@ -87,13 +87,13 @@ function! s:parse(messages) abort
   if !g:dartanalyzer_disable_highlight
     call s:update_hl()
   elseif exists('g:loaded_hier')
-    execute "HierUpdate"
+    execute 'HierUpdate'
   endif
 
   if !g:dartanalyzer_disable_message
     call dartanalyzer#update_message()
   elseif exists('g:loaded_quickfixstatus')
-    execute "QuickfixStatusEnable"
+    execute 'QuickfixStatusEnable'
   endif
 
   execute g:dartanalyzer_postprocess

@@ -98,7 +98,7 @@ if !exists('s:initialized')
       endif
       let modifier .= ':h'
     endfor
-    return ""
+    return ''
   endfunction "}}}
 
   " Define commands {{{

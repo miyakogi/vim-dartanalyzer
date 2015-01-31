@@ -62,7 +62,7 @@ endfunction
 
 function! s:wait_for_startup() abort
   echohl Special
-  echo "Please wait until dartanalyzer become enable."
+  echo 'Please wait until dartanalyzer become enable.'
   echohl
 
   while 1
