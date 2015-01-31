@@ -16,7 +16,7 @@ function! dartanalyzer#run_analysis(...) abort
   call g:dartanalyzer_pm.writeln(g:dartanalyzer_id, l:file_path)
 endfunction
 
-function! dartanalyzer#start_new_analysis()
+function! dartanalyzer#start_new_analysis() abort
   if exists('b:dartanalyzer_running') && b:dartanalyzer_running == 1
     call s:poll_process()
     return
@@ -37,7 +37,7 @@ function! dartanalyzer#start_new_analysis()
   call s:poll_process()
 endfunction
 
-function! s:poll_process()
+function! s:poll_process() abort
   let response = g:dartanalyzer_pm.read_wait(g:dartanalyzer_id, g:dartanalyzer_pm_timeout, [g:dartanalyzer#init#endline])
   let b:dartanalyzer_message .= response[0]
 
@@ -54,7 +54,7 @@ function! s:poll_process()
   endif
 endfunction
 
-function! s:parse(messages)
+function! s:parse(messages) abort
   if !g:dartanalyzer_disable_highlight
     call dartanalyzer#clear_hl()
   endif
@@ -101,7 +101,7 @@ function! s:parse(messages)
   call s:parse_postprocess()
 endfunction
 
-function! s:parse_postprocess()
+function! s:parse_postprocess() abort
   let b:dartanalyzer_running = 0
   let &updatetime = s:updatetime
   augroup dartanalyzer_polling
@@ -109,7 +109,7 @@ function! s:parse_postprocess()
   augroup END
 endfunction
 
-function! dartanalyzer#clear_hl()
+function! dartanalyzer#clear_hl() abort
   if exists('b:dartanalyzer_qflist')
     for qf_item in b:dartanalyzer_qflist
       try
@@ -120,7 +120,7 @@ function! dartanalyzer#clear_hl()
   endif
 endfunction
 
-function! s:update_hl()
+function! s:update_hl() abort
   if len(b:dartanalyzer_qflist) > 0
     for qf_item in b:dartanalyzer_qflist
       if qf_item.filename !=# b:dartanalyzer_filepath
@@ -138,7 +138,7 @@ function! s:update_hl()
   redraw
 endfunction
 
-function! s:show_msg(msg)
+function! s:show_msg(msg) abort
   let _winwidth = min([&columns, g:dartanalyzer_max_msglen]) - 10
   let msgwidth = strdisplaywidth(a:msg)
   if msgwidth >= _winwidth
@@ -149,7 +149,7 @@ function! s:show_msg(msg)
   echo msg
 endfunction
 
-function! dartanalyzer#update_message()
+function! dartanalyzer#update_message() abort
   if g:dartanalyzer_disable_message
     return
   endif
@@ -162,7 +162,7 @@ function! dartanalyzer#update_message()
   endif
 endfunction
 
-function! s:split_error_lines(message_lines)
+function! s:split_error_lines(message_lines) abort
   let error_list = []
 
   for message in a:message_lines
@@ -174,7 +174,7 @@ function! s:split_error_lines(message_lines)
   return error_list
 endfunction
 
-function! s:to_qfformat(error_list)
+function! s:to_qfformat(error_list) abort
   let l:qf_item = {}
   let l:qf_item.bufnr = bufnr('%')
   let l:qf_item.filename = a:error_list[3]
@@ -209,13 +209,13 @@ function! s:to_qfformat(error_list)
   return l:qf_item
 endfunction
 
-function! dartanalyzer#start_if_possible()
+function! dartanalyzer#start_if_possible() abort
   if b:dartanalyzer_running == 0
     call dartanalyzer#start_new_analysis()
   endif
 endfunction
 
-function! s:count_qfitems(type)
+function! s:count_qfitems(type) abort
   let n = 0
   for qf_item in b:dartanalyzer_qflist
     if qf_item.type ==# a:type
@@ -225,19 +225,19 @@ function! s:count_qfitems(type)
   return n
 endfunction
 
-function! dartanalyzer#count_errors()
+function! dartanalyzer#count_errors() abort
   return s:count_qfitems('E')
 endfunction
 
-function! dartanalyzer#count_warnings()
+function! dartanalyzer#count_warnings() abort
   return s:count_qfitems('W')
 endfunction
 
-function! dartanalyzer#count()
+function! dartanalyzer#count() abort
   return len(b:dartanalyzer_qflist)
 endfunction
 
-function! dartanalyzer#status_line()
+function! dartanalyzer#status_line() abort
   let text = 'Errors: '
         \ . printf('%d', dartanalyzer#count_errors())
         \ . ', '

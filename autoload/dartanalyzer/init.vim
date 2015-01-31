@@ -19,7 +19,7 @@ for n in range(g:dartanalyzer_max_msglen - strlen(s:vm_startup_message) - 1)
 endfor
 
 " Set autocmds
-function! s:enable()
+function! s:enable() abort
   augroup dartanalyzer
     autocmd! * <buffer>
     autocmd BufEnter,BuFWinEnter <buffer> call dartanalyzer#start_new_analysis()
@@ -28,7 +28,7 @@ function! s:enable()
   augroup END
 endfunction
 
-function! s:vm_startup()
+function! s:vm_startup() abort
   call g:dartanalyzer_pm.touch(g:dartanalyzer_id, g:dartanalyzer#init#cmd)
 
   call dartanalyzer#run_analysis(b:dartanalyzer_filepath)
@@ -45,14 +45,14 @@ function! s:vm_startup()
   augroup END
 endfunction
 
-function! s:poll_startup()
+function! s:poll_startup() abort
   if g:dartanalyzer_pm.read_wait(g:dartanalyzer_id, g:dartanalyzer_pm_timeout, ['>>> [^B]'])[2] ==# 'matched'
     call s:end_startup()
     return
   endif
 endfunction
 
-function! s:poll_startup_with_msg()
+function! s:poll_startup_with_msg() abort
   call s:poll_startup()
 
   echon s:vm_startup_message[: s:startup_count]
@@ -60,7 +60,7 @@ function! s:poll_startup_with_msg()
         \ ? s:startup_count : s:startup_count + 1
 endfunction
 
-function! s:wait_for_startup()
+function! s:wait_for_startup() abort
   echohl Special
   echo "Please wait until dartanalyzer become enable."
   echohl
@@ -73,7 +73,7 @@ function! s:wait_for_startup()
   endwhile
 endfunction
 
-function! s:end_startup()
+function! s:end_startup() abort
   let s:vm_started = 1
 
   " Show message
@@ -99,7 +99,7 @@ function! s:end_startup()
   call dartanalyzer#start_new_analysis()
 endfunction
 
-function! dartanalyzer#init#enable()
+function! dartanalyzer#init#enable() abort
   if !exists('s:vm_started') || s:vm_started == 0
     call s:vm_startup()
   elseif s:vm_started == 0
@@ -109,12 +109,12 @@ function! dartanalyzer#init#enable()
   endif
 endfunction
 
-function! dartanalyzer#init#disable()
+function! dartanalyzer#init#disable() abort
   call g:dartanalyzer_pm.kill(g:dartanalyzer_id)
   let s:vm_started = 0
 endfunction
 
-function! dartanalyzer#init#restart()
+function! dartanalyzer#init#restart() abort
   call dartanalyzer#init#disable()
   call dartanalyzer#init#enable()
 endfunction
