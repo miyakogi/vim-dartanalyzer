@@ -128,9 +128,9 @@ function! s:update_hl() abort
       endif
       let l = qf_item.lnum
       let c = qf_item.col + 1  " dartanalyzer counts the first column as 0
-      if qf_item.type == 'W'
+      if qf_item.type ==# 'W'
         let qf_item.id = matchadd('DartAnalyzerWarning', '^\%' . l . 'l.\{-}\zs\k\+\k\@!\%>' . c . 'c')
-      elseif qf_item.type == 'E'
+      elseif qf_item.type ==# 'E'
         let qf_item.id = matchadd('DartAnalyzerError', '\%' . l . 'l' . '.*$')
       endif
     endfor
