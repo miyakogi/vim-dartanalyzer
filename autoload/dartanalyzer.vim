@@ -24,7 +24,7 @@ function! dartanalyzer#start_new_analysis() abort
 
   call g:dartanalyzer_pm.touch(g:dartanalyzer_id, g:dartanalyzer#init#cmd)
   let b:dartanalyzer_message = ''
-  call g:dartanalyzer#run_analysis(b:dartanalyzer_filepath)
+  call dartanalyzer#run_analysis(b:dartanalyzer_filepath)
 
   let b:dartanalyzer_running = 1
   let s:start_time = localtime()
