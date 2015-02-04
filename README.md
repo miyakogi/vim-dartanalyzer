@@ -5,7 +5,7 @@ Vim plugin for running dartanalyzer asynchronously.
 
 ![ScreenCast](https://raw.githubusercontent.com/wiki/miyakogi/vim-dartanalyzer/images/screencast1.gif)
 
-This plugin is tested only on Linux (Ubuntu 14.04 64-bit).
+This plugin is tested on Vim (latest version) on Ubuntu 14.04 64-bit.
 
 Requirements
 ------------
