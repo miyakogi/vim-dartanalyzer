@@ -13,8 +13,8 @@ Requirements
 - `dartanalyzer` (included in [dart-sdk](https://www.dartlang.org/tools/sdk/))
 - Vim plugins
     - [Shougo/vimproc.vim](https://github.com/Shougo/vimproc.vim)
-    - [jceb/vim-hier](https://github.com/jceb/vim-hier) [*optilnal*]
-    - [dannyob/quickfixstatus](https://github.com/dannyob/quickfixstatus) [*optilnal*]
+    - [jceb/vim-hier](https://github.com/jceb/vim-hier) [*optional*]
+    - [dannyob/quickfixstatus](https://github.com/dannyob/quickfixstatus) [*optional*]
 
 Usage
 -----
